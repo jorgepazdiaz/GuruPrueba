@@ -3,13 +3,14 @@ Feature: Carrito de compras
   Quiero realizar una compra
   Para aquirir mis productos
 
+  @prueba
   Scenario: Comprar un producto
     Given la web esta disponible
     When doy click en generar tarjeta
     And capturo los datos de la tarjeta
-    And selecciono cantidad "4" para comprar producto
+    And selecciono cantidad "0" para comprar producto
     And Ingreso Datos de tarjeta
-    Then Valido Frase de Pago "Pago successfull!"
+    Then Valido Frase de Pago "Payment successfull!"
     And Valido el numero de orden
     And regreso a la pagina de inicio
 

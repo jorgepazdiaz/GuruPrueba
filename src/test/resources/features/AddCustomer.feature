@@ -3,6 +3,7 @@ Feature: Agregar un nuevo cliente
   Quiero agregar un nuevo cliente
   Para ofrecer mis productos
 
+
   Scenario: Agregar Cliente
     Given Voy a la pagina Telecom Project
     When le doy click a Agregar cliente
@@ -13,7 +14,10 @@ Feature: Agregar un nuevo cliente
     And obtengo el numero de Orden
     And ingreso el orden
     Then valido el orden de Tarifa
+    And verifico mensaje de felicitacion
+    And regreso al Home
 
+  @prueba
   Scenario: Alerta en el Formulario
     Given Voy a la pagina Telecom Project
     When le doy click a Agregar cliente
@@ -30,6 +34,9 @@ Feature: Agregar un nuevo cliente
     And Ingreso direccion "<direccion>"
     And Ingreso celular "<celular>"
     And envio el formulario
+    And obtengo el numero de Orden
+    And ingreso el orden
+    Then valido el orden de Tarifa
     Examples:
       | check   | nombre | apellido   | email           | direccion  | celular   |
       | done    | Jorge  | Paz        | jorge@test.com  | micasa 752 | 974880014 |

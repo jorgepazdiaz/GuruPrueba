@@ -7,8 +7,11 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import static Support.screenshot.pantallazo;
 
 
 public class AddCustomerDefinitions {
@@ -18,6 +21,7 @@ public class AddCustomerDefinitions {
     NroCustomerPage customer;
     ValidarOrdenPage validar;
     ValidarTarifaPage tarifa;
+    VolverHomePage volver;
 
     public AddCustomerDefinitions() {
         menuGuru= new MenuGuruPage(Hooks.driver);
@@ -26,6 +30,7 @@ public class AddCustomerDefinitions {
         customer= new NroCustomerPage(Hooks.driver);
         validar= new ValidarOrdenPage(Hooks.driver);
         tarifa= new ValidarTarifaPage(Hooks.driver);
+        volver= new VolverHomePage(Hooks.driver);
     }
 
     @Given("Voy a la pagina Telecom Project")
@@ -50,15 +55,22 @@ public class AddCustomerDefinitions {
     }
 
     @And("ingresar datos")
-    public void ingresarDatos(DataTable cliente) {
+    public void ingresarDatos(DataTable cliente) throws IOException{
         List<Map<String,String>> lista=cliente.asMaps(String.class,String.class);
         for(int i=0; i<lista.size(); i++){
             formulario.ClickCheck(lista.get(i).get("check"));
+            pantallazo();
             formulario.IngresarNombre(lista.get(i).get("nombre"));
+            pantallazo();
             formulario.IngresarApellido(lista.get(i).get("apellido"));
+            pantallazo();
             formulario.IngresarEmail(lista.get(i).get("email"));
+            pantallazo();
             formulario.IngresarDireccion(lista.get(i).get("direccion"));
+            pantallazo();
             formulario.IngresarCelular(lista.get(i).get("celular"));
+            pantallazo();
+
         }
     }
 
@@ -100,14 +112,17 @@ public class AddCustomerDefinitions {
     }
 
     @Then("obtener mensaje")
-    public void obtenerMensaje() {
+    public void obtenerMensaje() throws IOException {
         formulario.ObtenerAlerta();
+        pantallazo();
     }
 
     @And("obtengo el numero de Orden")
-    public void obtengoElNumeroDeOrden() {
+    public void obtengoElNumeroDeOrden() throws IOException{
         customer.CapturarOrden();
+        pantallazo();
         customer.VolverHome();
+
     }
 
     @And("ingreso el orden")
@@ -122,6 +137,17 @@ public class AddCustomerDefinitions {
     public void validoElOrdenDeTarifa() {
         tarifa.ValidarTexto();
         tarifa.clickTarifa();
-       // tarifa.ClickValidarTarifa();
+        tarifa.ClickValidarTarifa();
+    }
+
+    @And("verifico mensaje de felicitacion")
+    public void verificoMensajeDeFelicitacion() {
+        volver.validarFelicitacion();
+        
+    }
+
+    @And("regreso al Home")
+    public void regresoAlHome() {
+        volver.Volver();
     }
 }
